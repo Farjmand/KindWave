@@ -2,11 +2,10 @@ import { Suspense } from 'react';
 import { createServerClient } from '@/lib/supabase-server';
 import { Message } from '@/lib/supabase';
 import MessageFeed from '@/components/MessageFeed';
-import LiveCounter from '@/components/LiveCounter';
 import SubmitForm from '@/components/SubmitForm';
-import CatchButton from '@/components/CatchButton';
 import RealtimeProvider from '@/components/RealtimeProvider';
 import CurrentYear from '@/components/CurrentYear';
+import KindWaveLanding from '@/components/KindWaveLanding';
 import { cacheLife } from 'next/cache';
 
 async function getInitialData(): Promise<{ messages: Message[]; count: number; year: number }> {
@@ -37,18 +36,10 @@ export default async function Home() {
 
   return (
     <RealtimeProvider initialCount={count}>
+      <KindWaveLanding initialMessages={messages} initialCount={count} />
+
       <div className="page-wrapper">
         <main>
-          <section className="hero">
-            <h1 className="hero-wordmark">KindWave 🌊</h1>
-            <p className="hero-tagline">
-              Real messages of kindness from real people, all around the world.
-              No login. No judgment. Just warmth.
-            </p>
-            <LiveCounter initialCount={count} />
-            <CatchButton messages={messages} />
-          </section>
-
           <div className="container">
             <div className="submit-section">
               <SubmitForm />

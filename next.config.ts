@@ -1,5 +1,7 @@
 import type { NextConfig } from "next";
 
+const isDev = process.env.NODE_ENV === "development";
+
 const nextConfig: NextConfig = {
   cacheComponents: true,
   async headers() {
@@ -17,7 +19,8 @@ const nextConfig: NextConfig = {
             value: [
               "default-src 'self'",
               "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://ipapi.co",
-              "script-src 'self' 'unsafe-inline'",
+              // React dev mode needs 'unsafe-eval' for call stack reconstruction; never used in prod
+              `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""}`,
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               "font-src 'self' https://fonts.gstatic.com",
               "img-src 'self' data:",
